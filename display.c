@@ -1,88 +1,36 @@
 #include <stdio.h>
-#include <termios.h>    //termios, TCSANOW, ECHO, ICANON
-#include <unistd.h>     //STDIN_FILENO
-
-#define SCREEN_HEIGHT 20
-#define SCREEN_WIDTH 40
-#define HORIZONTAL_BORDER '-'
-#define VERTICAL_BORDER '|'
+#include "display_setup.h"
+#include "display_constants.h"
+#include "display_helpers.h"
 
 main () {
   int i;
   int current_screen_row = 1;
   char command;
   
-  //http://stackoverflow.com/questions/1798511/how-to-avoid-press-enter-with-any-getchar
-  static struct termios oldt, newt;
+  SETUP_DISPLAY
+  clear_screen();
 
-  /*tcgetattr gets the parameters of the current terminal
-  STDIN_FILENO will tell tcgetattr that it should write the settings
-  of stdin to oldt*/
-  tcgetattr( STDIN_FILENO, &oldt);
-  /*now the settings will be copied*/
-  newt = oldt;
+  while (command != 'q') { // a do..while loop would have been a nicer fit here
+    clear_screen();
 
-  /*ICANON normally takes care that one line at a time will be processed
-  that means it will return if it sees a "\n" or an EOF or an EOL*/
-  newt.c_lflag &= ~(ICANON);          
-
-  /*Those new settings will be set to STDIN
-  TCSANOW tells tcsetattr to change attributes immediately. */
-  tcsetattr( STDIN_FILENO, TCSANOW, &newt);  
-  
-  
-
-  
-  do {
-    for (i=1; i <= SCREEN_HEIGHT * 5; i++) {
-      printf ("\n");
-    }
     current_screen_row = 1;
     while (current_screen_row <= SCREEN_HEIGHT) {
-      if ((current_screen_row == 1) || (current_screen_row == SCREEN_HEIGHT)) {
-        for (i=1; i <= SCREEN_WIDTH; i++) {
-          printf ("%c", HORIZONTAL_BORDER);
-        }
-        printf ("\n");
-      }
-      if ((current_screen_row != 1) && (current_screen_row != SCREEN_HEIGHT)) {
+      draw_horizontal_borders(current_screen_row);
+
+      if ((current_screen_row != 1) && (current_screen_row != SCREEN_HEIGHT)) { // we will talk about the AND (&&) operator later
         if (command == 's') {
-          if (current_screen_row == 2) {
-            printf (".  .\n");
-          } else if (current_screen_row == 3) {
-            printf ("  |  \n");
-          } else if (current_screen_row == 4) {
-            printf ("\\___/\n");
-          } else {
-            printf ("\n");
-          }
+          print_smiley(current_screen_row);
         } else if (command == 'b') {
-          if (current_screen_row == 2) {
-            printf (".  .\n");
-          } else if (current_screen_row == 3) {
-            printf ("  |  \n");
-          } else if (current_screen_row == 4) {
-            printf ("/`````\\\n");
-          } else {
-            printf ("\n");
-          }
+          print_frowney(current_screen_row);
         } else {
-          for (i=1; i <= SCREEN_WIDTH; i++) {
-            if (i == 1) {  
-              printf("%c", VERTICAL_BORDER);
-            } else if (i == SCREEN_WIDTH) {  
-              printf("%c\n", VERTICAL_BORDER);
-            } else {
-              printf(" ");
-            }
-          }
+          print_blank_screen(current_screen_row);
         }
       }
       current_screen_row++;  
     }
-    command = getchar();
-  } while (command != 'q');
+    command = getchar(); // you should Google getchar and play around with this function to get comfortable with it
+  }
   
-  /*restore the old settings*/
-  tcsetattr( STDIN_FILENO, TCSANOW, &oldt);
+  BREAKDOWN_DISPLAY
 }
