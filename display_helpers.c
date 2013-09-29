@@ -6,26 +6,38 @@ void clear_screen () {
 }
 
 void print_smiley(int current_screen_row) {
-  if (current_screen_row == 2) {
-    printf (".  .\n");
-  } else if (current_screen_row == 3) {
-    printf ("  |  \n");
-  } else if (current_screen_row == 4) {
-    printf ("\\___/\n");
+  int remaining_line_width = SCREEN_WIDTH;
+  remaining_line_width = draw_left_of_content(remaining_line_width);
+  
+  if (current_screen_row == SMILEY_EYE_HEIGHT) {
+    remaining_line_width -= draw_smiley_eyes();
+    draw_rest_of_line(remaining_line_width);
+  } else if (current_screen_row == SMILEY_NOSE_HEIGHT) {
+    remaining_line_width -= draw_smiley_nose();
+    draw_rest_of_line(remaining_line_width);
+  } else if (current_screen_row == SMILEY_MOUTH_HEIGHT) {
+    remaining_line_width -= draw_smiley_mouth();
+    draw_rest_of_line(remaining_line_width);
   } else {
-    printf ("\n");
+    draw_rest_of_line(remaining_line_width);
   }
 }
 
 void print_frowney(int current_screen_row) {
-  if (current_screen_row == 2) {
-    printf (".  .\n");
-  } else if (current_screen_row == 3) {
-    printf ("  |  \n");
-  } else if (current_screen_row == 4) {
-    printf ("/`````\\\n");
+  int remaining_line_width = SCREEN_WIDTH;
+  remaining_line_width = draw_left_of_content(remaining_line_width);
+  
+  if (current_screen_row == FROWNEY_EYE_HEIGHT) {
+    remaining_line_width -= draw_frowney_eyes();
+    draw_rest_of_line(remaining_line_width);
+  } else if (current_screen_row == FROWNEY_NOSE_HEIGHT) {
+    remaining_line_width -= draw_frowney_nose();
+    draw_rest_of_line(remaining_line_width);
+  } else if (current_screen_row == FROWNEY_MOUTH_HEIGHT) {
+    remaining_line_width -= draw_frowney_mouth();
+    draw_rest_of_line(remaining_line_width);
   } else {
-    printf ("\n");
+    draw_rest_of_line(remaining_line_width);
   }
 }
 
@@ -50,4 +62,34 @@ void draw_horizontal_borders(int current_screen_row) {
     }
     printf ("\n");
   }
+}
+
+int draw_left_of_content(int remaining_line_width) {
+  remaining_line_width -= draw_left_border();  
+  remaining_line_width -= draw_left_margin(LEFT_MARGIN);
+  return remaining_line_width;
+}
+
+int draw_left_border() {
+  printf("%c", VERTICAL_BORDER);  
+  return 1;
+}
+
+int draw_left_margin(int margin) {
+  int i;
+  for (i=1; i<=margin; i++) {
+    printf("%c", EMPTY_SPACE);
+  }
+}
+
+void draw_rest_of_line(int remaining_line_width) {
+  while (remaining_line_width >= 1) {
+    printf("%c", EMPTY_SPACE);
+    remaining_line_width--;
+  }  
+  draw_right_border();
+}
+
+void draw_right_border() {
+  printf("%c\n", VERTICAL_BORDER);
 }

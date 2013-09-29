@@ -1,4 +1,7 @@
 #define SCREEN_HEIGHT 20
 #define SCREEN_WIDTH 40
+#define TOP_MARGIN 8
+#define LEFT_MARGIN 18
 #define HORIZONTAL_BORDER '-'
 #define VERTICAL_BORDER '|'
+#define EMPTY_SPACE ' '

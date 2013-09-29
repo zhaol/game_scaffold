@@ -1,7 +1,5 @@
 #include <stdio.h>
-#include "display_setup.h"
-#include "display_constants.h"
-#include "display_helpers.h"
+#include "display.h"
 
 main () {
   int i;
@@ -11,17 +9,17 @@ main () {
   SETUP_DISPLAY
   clear_screen();
 
-  while (command != 'q') { // a do..while loop would have been a nicer fit here
+  while (command != 'q') { // a do..while loop would have been a nicer fit here; we will talk about the do..while loop later
     clear_screen();
 
     current_screen_row = 1;
     while (current_screen_row <= SCREEN_HEIGHT) {
       draw_horizontal_borders(current_screen_row);
 
-      if ((current_screen_row != 1) && (current_screen_row != SCREEN_HEIGHT)) { // we will talk about the AND (&&) operator later
+      if ((current_screen_row != 1) && (current_screen_row != SCREEN_HEIGHT)) { // we will talk about the AND (&&) operator later (but you can Google it for now)
         if (command == 's') {
           print_smiley(current_screen_row);
-        } else if (command == 'b') {
+        } else if (command == 'b') { // we will talk about else if later (but you can Google it for now)
           print_frowney(current_screen_row);
         } else {
           print_blank_screen(current_screen_row);
