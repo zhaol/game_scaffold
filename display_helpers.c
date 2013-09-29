@@ -5,6 +5,10 @@ void clear_screen () {
   }
 }
 
+void display_instructions() {
+  printf("Press 's' for smileys, 'f' for frowneys, and 'q' to quit\n");
+}
+
 void print_smiley(int current_screen_row) {
   int remaining_line_width = SCREEN_WIDTH;
   remaining_line_width = draw_left_of_content(remaining_line_width);
