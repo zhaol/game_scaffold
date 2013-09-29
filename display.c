@@ -9,55 +9,28 @@ main () {
   char command;
   
   SETUP_DISPLAY
+  clear_screen();
 
-  do {
+  while (command != 'q') { // a do..while loop would have been a nicer fit here
     clear_screen();
 
     current_screen_row = 1;
     while (current_screen_row <= SCREEN_HEIGHT) {
-      if ((current_screen_row == 1) || (current_screen_row == SCREEN_HEIGHT)) {
-        for (i=1; i <= SCREEN_WIDTH; i++) {
-          printf ("%c", HORIZONTAL_BORDER);
-        }
-        printf ("\n");
-      }
-      if ((current_screen_row != 1) && (current_screen_row != SCREEN_HEIGHT)) {
+      draw_horizontal_borders(current_screen_row);
+
+      if ((current_screen_row != 1) && (current_screen_row != SCREEN_HEIGHT)) { // we will talk about the AND (&&) operator later
         if (command == 's') {
-          if (current_screen_row == 2) {
-            printf (".  .\n");
-          } else if (current_screen_row == 3) {
-            printf ("  |  \n");
-          } else if (current_screen_row == 4) {
-            printf ("\\___/\n");
-          } else {
-            printf ("\n");
-          }
+          print_smiley(current_screen_row);
         } else if (command == 'b') {
-          if (current_screen_row == 2) {
-            printf (".  .\n");
-          } else if (current_screen_row == 3) {
-            printf ("  |  \n");
-          } else if (current_screen_row == 4) {
-            printf ("/`````\\\n");
-          } else {
-            printf ("\n");
-          }
+          print_frowney(current_screen_row);
         } else {
-          for (i=1; i <= SCREEN_WIDTH; i++) {
-            if (i == 1) {  
-              printf("%c", VERTICAL_BORDER);
-            } else if (i == SCREEN_WIDTH) {  
-              printf("%c\n", VERTICAL_BORDER);
-            } else {
-              printf(" ");
-            }
-          }
+          print_blank_screen(current_screen_row);
         }
       }
       current_screen_row++;  
     }
-    command = getchar();
-  } while (command != 'q');
+    command = getchar(); // you should Google getchar and play around with this function to get comfortable with it
+  }
   
   BREAKDOWN_DISPLAY
 }
