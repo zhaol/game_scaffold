@@ -1,42 +1,18 @@
 #include <stdio.h>
-#include <termios.h>    //termios, TCSANOW, ECHO, ICANON
-#include <unistd.h>     //STDIN_FILENO
-
-#define SCREEN_HEIGHT 20
-#define SCREEN_WIDTH 40
-#define HORIZONTAL_BORDER '-'
-#define VERTICAL_BORDER '|'
+#include "display_setup.h"
+#include "display_constants.h"
+#include "display_helpers.h"
 
 main () {
   int i;
   int current_screen_row = 1;
   char command;
   
-  //http://stackoverflow.com/questions/1798511/how-to-avoid-press-enter-with-any-getchar
-  static struct termios oldt, newt;
+  SETUP_DISPLAY
 
-  /*tcgetattr gets the parameters of the current terminal
-  STDIN_FILENO will tell tcgetattr that it should write the settings
-  of stdin to oldt*/
-  tcgetattr( STDIN_FILENO, &oldt);
-  /*now the settings will be copied*/
-  newt = oldt;
-
-  /*ICANON normally takes care that one line at a time will be processed
-  that means it will return if it sees a "\n" or an EOF or an EOL*/
-  newt.c_lflag &= ~(ICANON);          
-
-  /*Those new settings will be set to STDIN
-  TCSANOW tells tcsetattr to change attributes immediately. */
-  tcsetattr( STDIN_FILENO, TCSANOW, &newt);  
-  
-  
-
-  
   do {
-    for (i=1; i <= SCREEN_HEIGHT * 5; i++) {
-      printf ("\n");
-    }
+    clear_screen();
+
     current_screen_row = 1;
     while (current_screen_row <= SCREEN_HEIGHT) {
       if ((current_screen_row == 1) || (current_screen_row == SCREEN_HEIGHT)) {
@@ -83,6 +59,5 @@ main () {
     command = getchar();
   } while (command != 'q');
   
-  /*restore the old settings*/
-  tcsetattr( STDIN_FILENO, TCSANOW, &oldt);
+  BREAKDOWN_DISPLAY
 }
