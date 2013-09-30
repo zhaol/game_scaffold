@@ -68,6 +68,10 @@ void draw_horizontal_borders(int current_screen_row) {
   }
 }
 
+int not_top_or_bottom_row(int current_screen_row) {
+  return ((current_screen_row != 1) && (current_screen_row != SCREEN_HEIGHT));
+}
+
 int draw_left_of_content(int remaining_line_width) {
   remaining_line_width -= draw_left_border();  
   remaining_line_width -= draw_left_margin(LEFT_MARGIN);

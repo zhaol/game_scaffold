@@ -23,7 +23,7 @@ int main () {
     while (current_screen_row <= SCREEN_HEIGHT) {
       draw_horizontal_borders(current_screen_row);
 
-      if ((current_screen_row != 1) && (current_screen_row != SCREEN_HEIGHT)) { // we will talk about the AND (&&) operator later (but you can Google it for now)
+      if (not_top_or_bottom_row(current_screen_row)) {
         if (command == 's') {
           print_smiley(current_screen_row);
         } else if (command == 'f') { // we will talk about else if later (but you can Google it for now)

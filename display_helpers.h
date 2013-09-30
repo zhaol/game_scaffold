@@ -3,6 +3,7 @@ void print_smiley(int current_screen_row);
 void print_frowney(int current_screen_row);
 void print_blank_screen();
 void draw_horizontal_borders(int current_screen_row);
+int not_top_or_bottom_row(int current_screen_row);
 int draw_left_of_content(int remaining_line_width);
 int draw_left_border();
 int draw_left_margin(int margin);
