@@ -9,31 +9,20 @@
 // This program provides the basic foundations to all future game type lab assignments in EE160
 int main () {
   int i;
-  int current_screen_row = 1;
   char command;
+  int x_position = HORIZONTAL_START;
+  int y_position = VERTICAL_START;
   
   SETUP_DISPLAY
   clear_screen();
 
-  while (command != 'q') { // a do..while loop would have been a nicer fit here; we will talk about the do..while loop later
+  while (command != QUIT_KEY) { // a do..while loop would have been a nicer fit here; we will talk about the do..while loop later
     clear_screen();
     display_instructions();
-
-    current_screen_row = 1;
-    while (current_screen_row <= SCREEN_HEIGHT) {
-      draw_horizontal_borders(current_screen_row);
-
-      if (not_top_or_bottom_row(current_screen_row)) {
-        if (command == 's') {
-          print_smiley(current_screen_row);
-        } else if (command == 'f') { // we will talk about else if later (but you can Google it for now)
-          print_frowney(current_screen_row);
-        } else {
-          print_blank_screen(current_screen_row);
-        }
-      }
-      current_screen_row++;  
-    }
+    update_position(&x_position, &y_position, command);
+    display_position(x_position, y_position);
+    
+    redraw_screen(x_position, y_position);
     command = getchar(); // you should Google getchar and play around with this function to get comfortable with it
   }
   
