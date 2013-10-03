@@ -2,6 +2,8 @@ void clear_screen ();
 void display_instructions();
 void display_position(int x_position, int y_position);
 void update_position(int* x_position, int* y_position, char command);
+void update_y_position(int* y_position_pointer, int delta);
+void update_x_position(int* x_position_pointer, int delta);
 void redraw_screen(int x_position, int y_position);
 void draw_row_with_token(int x_position);
 int print_token();

@@ -16,18 +16,26 @@ void display_instructions() {
 void update_position(int* x_position_pointer, int* y_position_pointer, char command) {
   switch (command) { // we will be learning about the switch statement later (but you can Google it for now)
     case UP_KEY:
-      (*y_position_pointer)--;
+      update_y_position(y_position_pointer, -1);
       break;
     case DOWN_KEY:
-      (*y_position_pointer)++;
+      update_y_position(y_position_pointer, 1);
       break;
     case LEFT_KEY:
-      (*x_position_pointer)--;
+      update_x_position(x_position_pointer, -1);
       break;
     case RIGHT_KEY:
-      (*x_position_pointer)++;
+      update_x_position(x_position_pointer, 1);
       break;
   }
+}
+
+void update_y_position(int* y_position_pointer, int delta) {
+  *y_position_pointer += delta;
+}
+
+void update_x_position(int* x_position_pointer, int delta) {
+  *x_position_pointer += delta;
 }
 
 void redraw_screen(int x_position, int y_position) {
