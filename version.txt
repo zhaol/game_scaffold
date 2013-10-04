@@ -1,1 +1,5 @@
-v1.1.0
+v1.1.1
+
+Lab 08:
+Contrain token to inside boundaries
+Add items for token to "pick up"
