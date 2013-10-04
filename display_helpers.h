@@ -1,4 +1,5 @@
 void clear_screen ();
+void seed_random_generator();
 void display_instructions();
 void display_position(int x_position, int y_position);
 void update_position(int* x_position, int* y_position, char command);

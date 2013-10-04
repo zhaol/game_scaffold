@@ -4,6 +4,8 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include "display.h"
 
 // This program provides the basic foundations to all future game type lab assignments in EE160
@@ -15,6 +17,7 @@ int main () {
   
   SETUP_DISPLAY
   clear_screen();
+  seed_random_generator();
 
   while (command != QUIT_KEY) { // a do..while loop would have been a nicer fit here; we will talk about the do..while loop later
     clear_screen();

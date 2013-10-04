@@ -5,6 +5,10 @@ void clear_screen () {
   }
 }
 
+void seed_random_generator () {
+  srand(time(NULL)); // This is needed so the random generator function, rand(), generates different random numbers each time the program starts
+}
+
 void display_position(int x_position, int y_position) {
   printf("Current Position: x: %d, y: %d\n", x_position, y_position);
 }
